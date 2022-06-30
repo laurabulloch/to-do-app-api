@@ -1,0 +1,11 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: com.verint.todoappapi
+  model-name-suffix: DTO
+  bean-validation: true
+
+map:
+  types:
+    - type: array => java.util.List
+  result: org.springframework.http.ResponseEntity
