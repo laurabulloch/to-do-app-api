@@ -18,23 +18,37 @@ class ToDosServiceTest{
         List<ToDoDTO> toDoDTOList = toDosService.getAll();
 
 
-        assertThat(toDoDTOList, contains());
+        assertThat(toDoDTOList, contains(ToDoMatcher.toDo(1L, "Item 1")));
     }
+
     @RequiredArgsConstructor
     static class ToDoMatcher extends TypeSafeMatcher<ToDoDTO>{
 
         private final long id;
         private final String name;
 
+        static ToDoMatcher toDo(Long id, String name) {
+            return new ToDoMatcher(id, name);
+        }
+
         @Override
         protected boolean matchesSafely(ToDoDTO item) {
-            return Objects.equals(id, item.getId()) && Objects.equals(name, item.getName()) ;
+            return Objects.equals(id, item.getId()) &&
+                    Objects.equals(name, item.getName()) ;
         }
 
         @Override
         public void describeTo(Description description) {
-            description.appendText("values didn't match");
+            describe(description, id, name);
+        }
 
+        private void describe(Description description, Long id, String name) {
+            description.appendText("<ToDoDTO(id:").appendValue(id).appendText(", name:").appendValue(name).appendText(")>");
+        }
+
+        @Override
+        public void describeMismatchSafely(ToDoDTO item, Description mismatchDescription){
+            describe(mismatchDescription, item.getId(), item.getName());
         }
     }
 
