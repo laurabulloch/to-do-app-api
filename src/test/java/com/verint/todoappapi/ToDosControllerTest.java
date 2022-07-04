@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.*;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
@@ -24,19 +25,17 @@ class ToDosControllerTest {
 
     //method_scenario_expectation
     @Test
-    void getToDos_noToDos_emptyArray() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/to-dos")).andExpect(content().json(null));
+    void getToDos_callsService() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/to-dos"));
+
+        verify(toDosService).getAll();
     }
+
     @Test
-    void getToDos_oneToDo_toDoValue() throws Exception {
-        ToDoDTO testItem = new ToDoDTO();
-        testItem.setName("Item 1");
-        List<ToDoDTO> testData = null;
-        testData.add(testItem);
+    void getToDos_noToDos_emptyArray() throws Exception {
+        when(toDosService.getAll()).thenReturn(Collections.emptyList());
 
-        when(toDosService.getAll()).thenReturn(testData);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/to-dos")).andExpect(content().json(testData.toString()));
+        mockMvc.perform(MockMvcRequestBuilders.get("/todos")).andExpect(content().json("[]"));
     }
 
 }

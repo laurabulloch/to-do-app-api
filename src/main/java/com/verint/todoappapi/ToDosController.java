@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 public class ToDosController implements TodosApi {
 
-    private ToDosService toDosService;
+    private final ToDosService toDosService;
 
     public ToDosController(ToDosService toDosService){
         this.toDosService = toDosService;
@@ -18,6 +18,6 @@ public class ToDosController implements TodosApi {
 
     @Override
     public ResponseEntity<List<ToDoDTO>> getToDos() {
-        return ResponseEntity.ok(toDosService.getAll()) ;
+        return ResponseEntity.ok(toDosService.getAll());
     }
 }
