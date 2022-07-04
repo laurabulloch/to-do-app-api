@@ -1,46 +1,41 @@
 package com.verint.todoappapi;
 
 import com.verint.todoappapi.model.ToDoDTO;
-import org.junit.jupiter.api.BeforeEach;
+import lombok.RequiredArgsConstructor;
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 
 class ToDosServiceTest{
-    ToDosService toDosService;
-
-    @BeforeEach
-    void setUp() {toDosService = new ToDosService();}
-
     @Test
-    void getAll_toDoEmpty_emptyList() {
-        assertSame(Collections.emptyList(), toDosService.getAll());
+    void getAll_shouldReturnSingleToDo() {
+        ToDosService toDosService = new ToDosService();
+        List<ToDoDTO> toDoDTOList = toDosService.getAll();
+
+
+        assertThat(toDoDTOList, contains());
     }
-    @Test
-    void setToDos_testDTO_listTestDTO() {
-        ToDoDTO testDTO = new ToDoDTO();
-        testDTO.setId(Long.getLong("1"));
-        testDTO.setName("test_data1");
-        List<ToDoDTO> testList = new ArrayList<>();
-        testList.add(testDTO);
+    @RequiredArgsConstructor
+    static class ToDoMatcher extends TypeSafeMatcher<ToDoDTO>{
 
-        toDosService.setToDos(testList);
-        assertSame(toDosService.getToDos(), testList);
-    }
-    @Test
-    void getAll_withToDo_arrayToDos() {
-        ToDoDTO testDTO = new ToDoDTO();
-        testDTO.setId(Long.getLong("1"));
-        testDTO.setName("test_data1");
-        List<ToDoDTO> testList = new ArrayList<>();
-        testList.add(testDTO);
+        private final long id;
+        private final String name;
 
-        toDosService.setToDos(testList);
-        assertSame(testList, toDosService.getAll());
+        @Override
+        protected boolean matchesSafely(ToDoDTO item) {
+            return Objects.equals(id, item.getId()) && Objects.equals(name, item.getName()) ;
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText("values didn't match");
+
+        }
     }
 
 }

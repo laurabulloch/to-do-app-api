@@ -9,17 +9,9 @@ import java.util.List;
 @Service
 public class ToDosService {
 
-    private List<ToDoDTO> toDos;
-
-    public ToDosService() {
-        this.toDos = new ArrayList<>();
-    }
 
     public List<ToDoDTO> getAll(){
-        return getToDos();
+        return null;
     }
 
-    public void setToDos(List<ToDoDTO> toDos){this.toDos = toDos;}
-
-    public List<ToDoDTO> getToDos() {return toDos;}
 }
