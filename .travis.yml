@@ -1,0 +1,9 @@
+language: java
+
+before_install:
+  – chmod +x gradlew
+
+jdk: oraclejdk17
+
+script:
+  - ./gradlew build
