@@ -30,11 +30,11 @@ class ToDosControllerTest {
         verify(toDosService).getAll();
     }
 
-    @Test
-    void getToDos_noToDos_emptyArray() throws Exception {
-        when(toDosService.getAll()).thenReturn(Collections.emptyList());
+   // @Test
+    //void getToDos_noToDos_emptyArray() throws Exception {
+    //    when(toDosService.getAll()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/todos")).andExpect(content().json("[]"));
-    }
+      //  mockMvc.perform(MockMvcRequestBuilders.get("/todos")).andExpect(content().json("[]"));
+   // }
 
 }
