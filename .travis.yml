@@ -6,4 +6,4 @@ before_install:
 jdk: oraclejdk17
 
 script:
-  - ./gradlew build --scan -s
+  - ./gradlew build
