@@ -6,7 +6,7 @@ before_install:
 jdk: oraclejdk17
 
 script:
-  - ./gradlew build –no-daemon
+  - ./gradlew build
 
 before_deploy:
   - rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install faraday -v 1.8.0
