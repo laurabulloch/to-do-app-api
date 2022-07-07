@@ -12,7 +12,7 @@ public class ToDosService {
     public List<ToDoDTO> getAll(){
         ToDoDTO toDo = new ToDoDTO();
         toDo.setId(1L);
-        toDo.setName("Item 1");
+        toDo.setName("Item test");
 
         return singletonList(toDo);
     }
