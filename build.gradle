@@ -78,3 +78,4 @@ sourceSets {
 }
 
 compileJava.dependsOn('processSpring')
+build.dependsOn jacocoTestCoverageVerification
