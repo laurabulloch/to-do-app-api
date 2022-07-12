@@ -22,7 +22,10 @@ class ToDosServiceTest{
     @Test
     void getAll_shouldReturnSingleToDo() {
         ToDosService toDosService = new ToDosService(toDoRepository);
-        when(toDoRepository.findAll()).thenReturn(List.of(new ToDo(1L,"Item 1")));
+        ToDo todo = new ToDo();
+        todo.setId(1L);
+        todo.setName("Item 1");
+        when(toDoRepository.findAll()).thenReturn(List.of(todo));
         List<ToDoDTO> toDoDTOList = toDosService.getAll();
 
         assertThat(toDoDTOList, contains(toDo(1L, "Item 1")));

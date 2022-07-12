@@ -1,13 +1,21 @@
 package com.verint.todoappapi;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@NoArgsConstructor
 @Getter
+@Setter
+@Entity
 public class ToDo {
 
-    private final Long id;
-    private final String name;
+    @Id
+    private Long id;
+    private String name;
 
 }
