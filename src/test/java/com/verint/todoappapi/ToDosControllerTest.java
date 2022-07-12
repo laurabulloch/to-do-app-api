@@ -2,12 +2,13 @@ package com.verint.todoappapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.*;
+import java.util.Collections;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,12 +30,11 @@ class ToDosControllerTest {
 
         verify(toDosService).getAll();
     }
+    @Test
+    void getToDos_noToDos_emptyArray() throws Exception {
+        when(toDosService.getAll()).thenReturn(Collections.emptyList());
 
-   // @Test
-    //void getToDos_noToDos_emptyArray() throws Exception {
-    //    when(toDosService.getAll()).thenReturn(Collections.emptyList());
-
-      //  mockMvc.perform(MockMvcRequestBuilders.get("/todos")).andExpect(content().json("[]"));
-   // }
+        mockMvc.perform(MockMvcRequestBuilders.get("/to-dos")).andExpect(content().json("[]"));
+    }
 
 }
