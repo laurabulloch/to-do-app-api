@@ -1,19 +1,23 @@
 package com.verint.todoappapi;
 
 import com.verint.todoappapi.model.ToDoDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-
 @Service
+@RequiredArgsConstructor
 public class ToDosService {
 
-    public List<ToDoDTO> getAll(){
-        ToDoDTO toDo = new ToDoDTO();
-        toDo.setId(1L);
-        toDo.setName("Item 1");
+    private final ToDoRepository toDoRepository;
 
-        return singletonList(toDo);
+    public List<ToDoDTO> getAll(){
+       return toDoRepository.findAll().stream().map(toDo -> {
+            ToDoDTO toDoDTO = new ToDoDTO();
+            toDoDTO.setId(toDo.getId());
+            toDoDTO.setName(toDo.getName());
+            return toDoDTO;
+        }).toList();
     }
 }
