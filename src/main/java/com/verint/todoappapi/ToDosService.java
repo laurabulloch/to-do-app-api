@@ -1,6 +1,7 @@
 package com.verint.todoappapi;
 
 import com.verint.todoappapi.model.ToDoDTO;
+import com.verint.todoappapi.model.ToDosPostRequestBodyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,9 @@ public class ToDosService {
             toDoDTO.setName(toDo.getName());
             return toDoDTO;
         }).toList();
+    }
+
+    public ToDoDTO create(ToDoDTO body) {
+        return null;
     }
 }
