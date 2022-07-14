@@ -18,4 +18,9 @@ public class ToDoBuilder {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(generateToDo(id, name));
     }
+
+    public static String generateDTOJson (String name) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(generateToDo(null, name));
+    }
 }

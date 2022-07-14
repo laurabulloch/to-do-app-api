@@ -17,24 +17,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest
-class ToDosControllerTest {
+class ToDoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ToDosService toDosService;
+    private ToDoService toDoService;
 
     //method_scenario_expectation
     @Test
     void getToDos_callsService() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/to-dos"));
 
-        verify(toDosService).getAll();
+        verify(toDoService).getAll();
     }
     @Test
     void getToDos_noToDos_emptyArray() throws Exception {
-        when(toDosService.getAll()).thenReturn(Collections.emptyList());
+        when(toDoService.getAll()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/to-dos")).andExpect(content().json("[]"));
     }
@@ -42,11 +42,10 @@ class ToDosControllerTest {
     @Test
     void save_callsService() throws Exception {
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
-        ToDoDTO test = ToDoBuilder.builder().name("test 1").build();
         String jsonString = ToDoBuilder.generateDTOJson(1L, "test 1");
         mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content(jsonString));
 
-        verify(toDosService).create(argumentCaptor.capture());
+        verify(toDoService).create(argumentCaptor.capture());
     }
 
     @Test
@@ -57,7 +56,7 @@ class ToDosControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content(jsonString));
 
-        verify(toDosService).create(argumentCaptor.capture());
+        verify(toDoService).create(argumentCaptor.capture());
         ToDoDTO dto = argumentCaptor.getValue();
         assert(dto.getName().equals(test.getName()));
     }
@@ -70,7 +69,7 @@ class ToDosControllerTest {
         String returnDTOToJson = ToDoBuilder.generateDTOJson(1L, "test 1");
 
 
-        when(toDosService.create(argumentCaptor.capture())).thenReturn(receivedDTO);
+        when(toDoService.create(argumentCaptor.capture())).thenReturn(receivedDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content(jsonString)).andExpect(content().json(returnDTOToJson));
     }
