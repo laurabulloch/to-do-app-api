@@ -1,5 +1,6 @@
 package com.verint.todoappapi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verint.todoappapi.model.ToDoDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -11,6 +12,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 
+import static com.verint.todoappapi.ToDoDTOMatcher.toDoDTO;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -40,20 +44,12 @@ class ToDoControllerTest {
     }
 
     @Test
-    void save_callsService() throws Exception {
+    void save_callsServiceWithDTO() throws Exception {
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
-        String jsonString = ToDoBuilder.generateDTOJson(1L, "test 1");
-        mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content(jsonString));
-
-        verify(toDoService).create(argumentCaptor.capture());
-    }
-
-    @Test
-    void save_callsServiceWithDTOGiven() throws Exception {
-        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
-        ToDoDTO test = ToDoBuilder.builder().name("test 1").build();
-        String jsonString = ToDoBuilder.generateDTOJson(1L, "test 1");
-
+        ToDoDTO test = new ToDoDTO();
+        test.setName("item 1");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(test);
         mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content(jsonString));
 
         verify(toDoService).create(argumentCaptor.capture());
@@ -64,14 +60,23 @@ class ToDoControllerTest {
     @Test
     void save_returnsDTO() throws Exception {
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
-        String jsonString = ToDoBuilder.generateDTOJson(1L, "test 1");
-        ToDoDTO receivedDTO = ToDoBuilder.builder().id(1L).name("test 1").build();
-        String returnDTOToJson = ToDoBuilder.generateDTOJson(1L, "test 1");
+        ToDoDTO testReceived = ToDoDTOBuilder.builder().id(1L).name("Item 1").build();
 
+        when(toDoService.create(argumentCaptor.capture())).thenReturn(testReceived);
 
-        when(toDoService.create(argumentCaptor.capture())).thenReturn(receivedDTO);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content(jsonString)).andExpect(content().json(returnDTOToJson));
+        mockMvc.perform(MockMvcRequestBuilders.post("/to-dos").contentType(APPLICATION_JSON).content("""
+                            {
+                                "name": "Item 1",
+                                "status": false
+                            }
+                            """)).andExpect(content().json("""
+                   {
+                       "id": 1,
+                       "name": "Item 1"
+                   }
+                   """));
+        verify(toDoService).create(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue(), is(toDoDTO("Item 1")));
     }
 
 }

@@ -4,35 +4,34 @@ import lombok.RequiredArgsConstructor;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 public class ToDoMatcher extends TypeSafeMatcher<ToDo> {
+    private final Long id;
     private final String name;
 
-    public static ToDoMatcher toDo(String name) {
-        return new ToDoMatcher(name);
+    public static ToDoMatcher toDo(Long id, String name) {
+        return new ToDoMatcher(id,name);
     }
-
 
     @Override
     protected boolean matchesSafely (ToDo item) {
-        return item.getName().equals(name);
+        return Objects.equals(id, item.getId()) &&
+                Objects.equals(name, item.getName());
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText(" ");
-        describeTask(description, name);
+        describe(description, id, name);
     }
 
     @Override
     protected void describeMismatchSafely(ToDo item, Description mismatchDescription) {
-        mismatchDescription.appendText("was ");
-        describeTask(mismatchDescription, item.getName());
+        describe(mismatchDescription, item.getId(), item.getName());;
     }
 
-    private void describeTask(Description description, String name) {
-        description.appendText("<TaskDTO(name= ")
-                .appendValue(name)
-                .appendText(")>");
+    private void describe(Description description, Long id, String name) {
+        description.appendText("<ToDo(id=").appendValue(id).appendText(", name=").appendValue(name).appendText(")>");
     }
 }

@@ -10,10 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static com.verint.todoappapi.ToDoDTOMatcher.toDo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mapstruct.factory.Mappers.getMapper;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -39,27 +38,34 @@ class ToDoServiceTest {
         when(toDoRepository.findAll()).thenReturn(List.of(todo));
         List<ToDoDTO> toDoDTOList = toDoService.getAll();
 
-        assertThat(toDoDTOList, contains(toDo(1L, "Item 1")));
+        assertThat(toDoDTOList, contains(ToDoDTOMatcher.toDoDTO(1L, "Item 1")));
     }
 
     @Test
     void create_shouldSaveToDo() {
+        ArgumentCaptor<ToDo> toDoCaptor = ArgumentCaptor.forClass(ToDo.class);
+
         when(toDoRepository.save(any())).thenReturn(new ToDo(null,null));
 
-        ArgumentCaptor<ToDo> taskCaptor = ArgumentCaptor.forClass(ToDo.class);
-        verify(toDoRepository).save(taskCaptor.capture());
+        toDoService.create(ToDoDTOBuilder.builder()
+                .name(null)
+                .build());
 
-        assertThat(taskCaptor.getValue(), is(ToDoMatcher.toDo("item 3")));
+        verify(toDoRepository).save(toDoCaptor.capture());
+
+        assertThat(toDoCaptor.getValue(), is(ToDoMatcher.toDo(null, null)));
     }
+
 
     @Test
     void create_shouldReturnCreatedToDoDTO() {
         when(toDoRepository.save(any())).thenReturn(new ToDo(5L, "item 5"));
 
-        ToDoDTO createdToDo = toDoService.create(ToDoBuilder.builder()
+        ToDoDTO createdToDo = toDoService.create(ToDoDTOBuilder.builder()
                 .name("item 5")
                 .build());
 
-        assertThat(createdToDo, is(toDo(5L, "item 5")));
+        assertThat(createdToDo, is(ToDoDTOMatcher.toDoDTO(5L, "item 5")));
     }
+
 }

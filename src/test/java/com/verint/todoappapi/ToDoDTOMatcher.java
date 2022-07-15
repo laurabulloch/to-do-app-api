@@ -13,11 +13,11 @@ class ToDoDTOMatcher extends TypeSafeMatcher<ToDoDTO> {
     private final Long id;
     private final String name;
 
-    static ToDoDTOMatcher toDo(Long id, String name) {
+    static ToDoDTOMatcher toDoDTO(Long id, String name) {
         return new ToDoDTOMatcher(id, name);
     }
 
-    static ToDoDTOMatcher toDo(String name) {
+    static ToDoDTOMatcher toDoDTO(String name) {
         return new ToDoDTOMatcher(null, name);
     }
     @Override
