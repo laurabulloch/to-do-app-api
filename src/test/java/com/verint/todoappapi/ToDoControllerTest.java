@@ -29,7 +29,6 @@ class ToDoControllerTest {
     @MockBean
     private ToDoService toDoService;
 
-    //method_scenario_expectation
     @Test
     void getToDos_callsService() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/to-dos"));
@@ -78,5 +77,4 @@ class ToDoControllerTest {
         verify(toDoService).create(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue(), is(toDoDTO("Item 1")));
     }
-
 }

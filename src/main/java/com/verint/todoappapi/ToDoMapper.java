@@ -11,5 +11,4 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 public interface ToDoMapper {
         ToDoDTO entityToDTO(ToDo toDo);
         ToDo dtoToEntity(ToDoDTO toDoDTO);
-
 }

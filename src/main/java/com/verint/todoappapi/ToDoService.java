@@ -13,7 +13,6 @@ public class ToDoService {
     private final ToDoRepository toDoRepository;
     private final ToDoMapper toDoMapper;
 
-
     public List<ToDoDTO> getAll(){
        return toDoRepository.findAll().stream().map(toDo -> {
             ToDoDTO toDoDTO = new ToDoDTO();

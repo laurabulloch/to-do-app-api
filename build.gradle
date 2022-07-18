@@ -35,24 +35,22 @@ jacocoTestReport {
     }
 }
 
-//jacocoTestCoverageVerification {
-//    afterEvaluate {
-//        classDirectories.setFrom(files(classDirectories.files.collect {
-//            fileTree(dir: it, exclude:  [
-//                    'com.verint.todoappapi.ToDoAppApiApplication',
-//                    'com.verint.todoappapi.ToDoConfig',
-//                    'com.verint.todoappapi.ToDoMapperImpl'
-//            ])
-//        }))
-//    }
-//    violationRules {
-//        rule {
-//            limit {
-//                minimum = 1.0
-//            }
-//        }
-//    }
-//}
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            includes = ['com.verint.todoappapi.*']
+            excludes =
+                    ['com.verint.todoappapi.ToDoAppApiApplication',
+                     'com.verint.todoappapi.ToDoConfig',
+                     'com.verint.todoappapi.ToDoMapperImpl']
+
+            limit {
+                minimum = 1.0
+            }
+        }
+    }
+}
 
 dependencies {
     compileOnly 'org.projectlombok:lombok'

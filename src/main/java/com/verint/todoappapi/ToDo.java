@@ -21,5 +21,4 @@ public class ToDo {
 
     @Column(nullable=false)
     private String name;
-
 }

@@ -11,8 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.mapstruct.factory.Mappers.getMapper;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -40,7 +40,6 @@ class ToDoServiceTest {
 
         assertThat(toDoDTOList, contains(ToDoDTOMatcher.toDoDTO(1L, "Item 1")));
     }
-
     @Test
     void create_shouldSaveToDo() {
         ArgumentCaptor<ToDo> toDoCaptor = ArgumentCaptor.forClass(ToDo.class);
@@ -55,8 +54,6 @@ class ToDoServiceTest {
 
         assertThat(toDoCaptor.getValue(), is(ToDoMatcher.toDo(null, null)));
     }
-
-
     @Test
     void create_shouldReturnCreatedToDoDTO() {
         when(toDoRepository.save(any())).thenReturn(new ToDo(5L, "item 5"));
@@ -67,5 +64,11 @@ class ToDoServiceTest {
 
         assertThat(createdToDo, is(ToDoDTOMatcher.toDoDTO(5L, "item 5")));
     }
+    @Test
+    void create_null_shouldReturnNull() {
+        when(toDoRepository.save(any())).thenReturn(null);
 
+        ToDoDTO createdToDo = toDoService.create(null);
+        assert(createdToDo==null);
+    }
 }

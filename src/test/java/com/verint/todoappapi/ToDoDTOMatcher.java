@@ -20,6 +20,7 @@ class ToDoDTOMatcher extends TypeSafeMatcher<ToDoDTO> {
     static ToDoDTOMatcher toDoDTO(String name) {
         return new ToDoDTOMatcher(null, name);
     }
+
     @Override
     protected boolean matchesSafely(ToDoDTO item) {
         return Objects.equals(id, item.getId()) &&

@@ -20,7 +20,6 @@ public class ToDoMatcher extends TypeSafeMatcher<ToDo> {
         return Objects.equals(id, item.getId()) &&
                 Objects.equals(name, item.getName());
     }
-
     @Override
     public void describeTo(Description description) {
         describe(description, id, name);
@@ -28,7 +27,7 @@ public class ToDoMatcher extends TypeSafeMatcher<ToDo> {
 
     @Override
     protected void describeMismatchSafely(ToDo item, Description mismatchDescription) {
-        describe(mismatchDescription, item.getId(), item.getName());;
+        describe(mismatchDescription, item.getId(), item.getName());
     }
 
     private void describe(Description description, Long id, String name) {
