@@ -1,8 +1,0 @@
-{
-  "name": "heroku-springboot-basic-app",
-  "buildpacks": [
-    {
-      "url": "heroku/gradle"
-    }
-  ]
-}
