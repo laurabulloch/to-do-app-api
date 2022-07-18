@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.mapstruct.factory.Mappers.getMapper;
@@ -69,6 +70,6 @@ class ToDoServiceTest {
         when(toDoRepository.save(any())).thenReturn(null);
 
         ToDoDTO createdToDo = toDoService.create(null);
-        assert(createdToDo==null);
+        assertThat(createdToDo, is(nullValue()));
     }
 }
