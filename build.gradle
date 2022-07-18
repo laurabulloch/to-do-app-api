@@ -27,6 +27,13 @@ test {
 }
 
 jacocoTestReport {
+    afterEvaluate{
+        classDirectories.setFrom(files(classDirectories.files.collect{
+            fileTree(dir: it, exclude: [
+                    'com/verint/**/ToDoMapperImpl.class'
+            ])
+        }))
+    }
     dependsOn test
     reports {
         xml.required = false
