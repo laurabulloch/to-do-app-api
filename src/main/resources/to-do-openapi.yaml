@@ -19,6 +19,25 @@ paths:
                 items:
                   $ref: '#/components/schemas/ToDo'
 
+    post:
+      operationId: save
+      tags:
+        - todos
+      description: save a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+      responses:
+        '201':
+          description: program created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+
 components:
   schemas:
     ToDo:
