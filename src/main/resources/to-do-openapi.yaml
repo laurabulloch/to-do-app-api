@@ -52,10 +52,6 @@ paths:
       responses:
         '204':
           description: program has successfully deleted the to do
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ToDo'
 
 components:
   schemas:
