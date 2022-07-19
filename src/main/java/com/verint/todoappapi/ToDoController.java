@@ -27,7 +27,7 @@ public class ToDoController implements TodosApi {
     }
 
     @Override
-    public ResponseEntity<ToDoDTO> delete(ToDoDTO body) {
+    public ResponseEntity<Void> delete(ToDoDTO body) {
         return null;
     }
 }
