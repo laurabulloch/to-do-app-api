@@ -52,6 +52,8 @@ paths:
       responses:
         '204':
           description: program has successfully deleted the to do
+        '404':
+          description: to do not found
 
 components:
   schemas:
