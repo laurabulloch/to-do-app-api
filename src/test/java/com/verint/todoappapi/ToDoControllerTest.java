@@ -18,6 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest
@@ -76,5 +77,19 @@ class ToDoControllerTest {
                    """));
         verify(toDoService).create(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue(), is(toDoDTO("Item 1")));
+    }
+    @Test
+    void deleteToDo_shouldCallseviceWithDelete()throws Exception{
+        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
+
+        when(toDoService.delete(argumentCaptor.capture())).thenReturn(true);
+
+        mockMvc.perform(delete("/to-dos")
+                .contentType(APPLICATION_JSON)
+                .content("""
+                        {data:{id:1}}
+                        """));
+        verify(toDoService).delete(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue(), is(toDoDTO(1L, null)));
     }
 }
