@@ -23,7 +23,7 @@ paths:
       operationId: save
       tags:
         - todos
-      description: save a task
+      description: save a toDo
       requestBody:
         required: true
         content:
@@ -33,6 +33,25 @@ paths:
       responses:
         '201':
           description: program created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+
+    delete:
+      operationId: delete
+      tags:
+        - todos
+      description: delete a toDo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+      responses:
+        '204':
+          description: program has successfully deleted the to do
           content:
             application/json:
               schema:
