@@ -30,6 +30,6 @@ public class ToDoController implements TodosApi {
     @Override
     public ResponseEntity<Void> delete(ToDoDTO body) {
         toDoService.delete(body);
-        return null;
+        return ResponseEntity.noContent().build();
     }
 }

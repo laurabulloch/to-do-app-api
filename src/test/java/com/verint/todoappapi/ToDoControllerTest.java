@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest
@@ -105,8 +106,19 @@ class ToDoControllerTest {
                 .contentType(APPLICATION_JSON)
                 .content("""
                         {"id": 1}
-                        """)).andExpect(MockMvcResultMatchers.status().is(204));
-        verify(toDoService).delete(argumentCaptor.capture());
+                        """)).andExpect(status().is(204));
+    }
+    @Test
+    void delete_shouldRespond404WhenIdNotFound()throws Exception{
+        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
+
+        when(toDoService.delete(argumentCaptor.capture())).thenReturn(true);
+
+        mockMvc.perform(delete("/to-dos")
+                .contentType(APPLICATION_JSON)
+                .content("""
+                        {"id": 1}
+                        """)).andExpect(status().is(404));
     }
 
 
