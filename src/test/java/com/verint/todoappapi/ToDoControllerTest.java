@@ -7,8 +7,11 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.HeaderResultMatchers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collections;
 
@@ -79,7 +82,7 @@ class ToDoControllerTest {
         assertThat(argumentCaptor.getValue(), is(toDoDTO("Item 1")));
     }
     @Test
-    void deleteToDo_shouldCallseviceWithDelete()throws Exception{
+    void delete_shouldCallServiceWithDelete()throws Exception{
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
 
         when(toDoService.delete(argumentCaptor.capture())).thenReturn(true);
@@ -87,9 +90,24 @@ class ToDoControllerTest {
         mockMvc.perform(delete("/to-dos")
                 .contentType(APPLICATION_JSON)
                 .content("""
-                        {data:{id:1}}
+                        {"id": 1}
                         """));
         verify(toDoService).delete(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue(), is(toDoDTO(1L, null)));
     }
+    @Test
+    void delete_shouldRespond204WhenSuccessful()throws Exception{
+        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
+
+        when(toDoService.delete(argumentCaptor.capture())).thenReturn(true);
+
+        mockMvc.perform(delete("/to-dos")
+                .contentType(APPLICATION_JSON)
+                .content("""
+                        {"id": 1}
+                        """)).andExpect(MockMvcResultMatchers.status().is(204));
+        verify(toDoService).delete(argumentCaptor.capture());
+    }
+
+
 }
