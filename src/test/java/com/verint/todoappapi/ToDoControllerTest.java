@@ -112,7 +112,7 @@ class ToDoControllerTest {
     void delete_shouldRespond404WhenIdNotFound()throws Exception{
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
 
-        when(toDoService.delete(argumentCaptor.capture())).thenReturn(true);
+        when(toDoService.delete(argumentCaptor.capture())).thenReturn(false);
 
         mockMvc.perform(delete("/to-dos")
                 .contentType(APPLICATION_JSON)

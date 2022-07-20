@@ -29,7 +29,11 @@ public class ToDoController implements TodosApi {
 
     @Override
     public ResponseEntity<Void> delete(ToDoDTO body) {
-        toDoService.delete(body);
-        return ResponseEntity.noContent().build();
+        Boolean success = toDoService.delete(body);
+
+        if(success){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
