@@ -23,7 +23,7 @@ paths:
       operationId: save
       tags:
         - todos
-      description: save a task
+      description: save a toDo
       requestBody:
         required: true
         content:
@@ -37,6 +37,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ToDo'
+  /to-dos/{id}:
+    delete:
+      operationId: delete
+      tags:
+        - todos
+      description: delete a toDo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: program has successfully deleted the to do
+        '404':
+          description: to do not found
 
 components:
   schemas:
