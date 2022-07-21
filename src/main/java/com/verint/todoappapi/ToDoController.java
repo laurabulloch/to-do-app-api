@@ -28,8 +28,8 @@ public class ToDoController implements TodosApi {
     }
 
     @Override
-    public ResponseEntity<Void> delete(ToDoDTO body) {
-        Boolean success = toDoService.delete(body);
+    public ResponseEntity<Void> delete(Long id) {
+        Boolean success = toDoService.delete(id);
 
         if(success){
             return ResponseEntity.noContent().build();

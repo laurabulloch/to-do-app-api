@@ -2,6 +2,7 @@ package com.verint.todoappapi;
 
 import com.verint.todoappapi.model.ToDoDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,12 @@ public class ToDoService {
         return toDoMapper.entityToDTO(toDoRepository.save(toDoMapper.dtoToEntity(body)));
     }
 
-    public Boolean delete(ToDoDTO body) {
-        return false;
+    public boolean delete(Long id) {
+        try {
+            toDoRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException){
+            return false;
+        }
+        return true;
     }
 }

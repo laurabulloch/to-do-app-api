@@ -37,18 +37,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ToDo'
-
+  /to-dos/{id}:
     delete:
       operationId: delete
       tags:
         - todos
       description: delete a toDo
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ToDo'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         '204':
           description: program has successfully deleted the to do
