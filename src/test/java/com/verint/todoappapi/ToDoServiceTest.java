@@ -42,7 +42,7 @@ class ToDoServiceTest {
         assertThat(toDoDTOList, contains(ToDoDTOMatcher.toDoDTO(1L, "Item 1")));
     }
     @Test
-    void create_shouldSaveToDo() {
+    void create_calledWithNull_shouldSaveToDo() {
         ArgumentCaptor<ToDo> toDoCaptor = ArgumentCaptor.forClass(ToDo.class);
 
         when(toDoRepository.save(any())).thenReturn(new ToDo(null,null));
@@ -56,7 +56,7 @@ class ToDoServiceTest {
         assertThat(toDoCaptor.getValue(), is(ToDoMatcher.toDo(null, null)));
     }
     @Test
-    void create_shouldReturnCreatedToDoDTO() {
+    void create_calledWithToDo_shouldReturnCreatedToDoDTO() {
         when(toDoRepository.save(any())).thenReturn(new ToDo(5L, "item 5"));
 
         ToDoDTO createdToDo = toDoService.create(ToDoDTOBuilder.builder()
@@ -66,7 +66,7 @@ class ToDoServiceTest {
         assertThat(createdToDo, is(ToDoDTOMatcher.toDoDTO(5L, "item 5")));
     }
     @Test
-    void create_null_shouldReturnNull() {
+    void create_withNullToDo_shouldReturnNull() {
         when(toDoRepository.save(any())).thenReturn(null);
 
         ToDoDTO createdToDo = toDoService.create(null);

@@ -47,7 +47,6 @@ class ToDoControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/to-dos")).andExpect(content().json("[]"));
     }
-
     @Test
     void save_callsServiceWithDTO() throws Exception {
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
@@ -61,7 +60,6 @@ class ToDoControllerTest {
         ToDoDTO dto = argumentCaptor.getValue();
         assert(dto.getName().equals(test.getName()));
     }
-
     @Test
     void save_returnsDTO() throws Exception {
         ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
