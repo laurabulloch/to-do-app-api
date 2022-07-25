@@ -73,6 +73,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 
+    testImplementation 'io.rest-assured:rest-assured'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
