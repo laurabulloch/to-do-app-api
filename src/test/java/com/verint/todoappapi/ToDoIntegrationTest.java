@@ -2,22 +2,28 @@ package com.verint.todoappapi;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.jpa.repository.JpaContext;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 
-@ContextConfiguration(classes = JpaContext.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ToDoIntegrationTest {
+        private final static String BASE_URI = "http://localhost";
+
+        @LocalServerPort
+        private int port;
 
         @BeforeEach
         public void setUp() {
-                RestAssured.baseURI = "http://localhost:8080";
+                RestAssured.baseURI = BASE_URI;
+                RestAssured.port = port;
 
                 given()
                         .body(ToDoDTOBuilder.builder().name("Item 1").build())
