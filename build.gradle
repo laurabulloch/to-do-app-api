@@ -98,6 +98,7 @@ sourceSets {
             srcDirs "$projectDir/build/openapi"
         }
     }
+
     integrationTest {
         java {
             compileClasspath += main.output + test.output
