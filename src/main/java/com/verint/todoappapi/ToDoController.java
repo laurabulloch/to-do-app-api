@@ -3,7 +3,6 @@ package com.verint.todoappapi;
 import com.verint.todoappapi.api.TodosApi;
 import com.verint.todoappapi.model.ToDoDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,7 @@ public class ToDoController implements TodosApi {
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
-        Boolean success = toDoService.delete(id);
+        boolean success = toDoService.delete(id);
 
         if(success){
             return ResponseEntity.noContent().build();
