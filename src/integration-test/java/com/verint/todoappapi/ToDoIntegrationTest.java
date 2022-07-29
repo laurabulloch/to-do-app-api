@@ -10,12 +10,14 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.*;
 
 class ToDoIntegrationTest {
-        private final static String BASE_URI = "http://localhost";
-
         @BeforeEach
         public void setUp() {
-                RestAssured.baseURI = BASE_URI;
-                RestAssured.port = 8080;
+                if(System.getenv("url") == null){
+                        RestAssured.baseURI = "http://localhost:8080";
+                }
+                else{
+                        RestAssured.baseURI = System.getenv("url");
+                }
 
         }
 
