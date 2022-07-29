@@ -17,4 +17,4 @@ deploy:
   app: things-i-need-to-do
 
 after_deploy:
-  - ./gradlew clean integrationTest
+  - BASE_URI=http://localhost ./gradlew clean integrationTest
