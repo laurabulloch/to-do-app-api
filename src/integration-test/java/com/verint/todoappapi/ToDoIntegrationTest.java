@@ -2,7 +2,7 @@ package com.verint.todoappapi;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.*;
 
 class ToDoIntegrationTest {
-        @BeforeEach
+        @BeforeAll
         public void setUp() {
                 if(System.getenv("url") == null){
                         RestAssured.baseURI = "http://localhost:8080";
@@ -19,10 +19,6 @@ class ToDoIntegrationTest {
                         RestAssured.baseURI = System.getenv("url");
                 }
 
-        }
-
-        @Test
-        void getListToDos() {
                 given()
                         .body(ToDoDTOBuilder.builder().name("Item 1").build())
                         .contentType(ContentType.JSON)
@@ -35,6 +31,10 @@ class ToDoIntegrationTest {
                         .when().post("/to-dos")
                         .then().assertThat().statusCode(200);
 
+        }
+
+        @Test
+        void getListToDos() {
                 when().get("/to-dos")
                         .then().statusCode(200)
                         .body("id",hasItems(1, 2))
