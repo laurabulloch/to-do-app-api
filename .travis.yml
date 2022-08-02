@@ -15,3 +15,6 @@ deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
   app: things-i-need-to-do
+
+after_deploy:
+  - ./gradlew clean integrationTest -D url='https://integration-tests.herokuapp.com/'
