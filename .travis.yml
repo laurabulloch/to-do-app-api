@@ -17,4 +17,4 @@ deploy:
   app: things-i-need-to-do
 
 after_deploy:
-  - ./gradlew clean integrationTest -D url=https://integration-tests.herokuapp.com/
+  - ./gradlew clean integrationTest -Durl=https://integration-tests.herokuapp.com/
