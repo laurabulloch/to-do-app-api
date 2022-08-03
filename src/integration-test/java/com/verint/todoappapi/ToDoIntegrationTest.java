@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.*;
 class ToDoIntegrationTest {
         @BeforeEach
         public void setUp() {
-                if(System.getenv("url") == null){
+                if(System.getProperty("url") == null){
                         RestAssured.baseURI = "http://localhost:8080";
                 }
                 else{
