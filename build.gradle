@@ -111,8 +111,8 @@ sourceSets {
 }
 
 task integrationTest(type: Test) {
+    systemProperty 'url', System.getProperty('url')
     useJUnitPlatform()
-
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
