@@ -18,8 +18,8 @@ class ToDoIntegrationTest {
         @BeforeAll
         public static void setUp() {
                 if(System.getProperty("url") == null){
-                        RestAssured.baseURI = "http://localhost:8080";
-                        //RestAssured.baseURI = "https://integration-tests.herokuapp.com";
+                        //RestAssured.baseURI = "http://localhost:8080";
+                        RestAssured.baseURI = "https://integration-tests.herokuapp.com";
                 }
                 else{
                         RestAssured.baseURI = System.getProperty("url");
