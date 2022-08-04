@@ -17,5 +17,5 @@ deploy:
   app: things-i-need-to-do
 
 after_deploy:
-  -  heroku pg:reset DATABASE_URL --confirm integration-tests
+  -  heroku pg:reset DATABASE_URL --confirm integration-tests --app integration-tests
   - ./gradlew -Durl=https://integration-tests.herokuapp.com clean integrationTest
