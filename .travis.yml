@@ -18,4 +18,4 @@ deploy:
 
 after_deploy:
   -  heroku --app integration-tests pg:reset DATABASE_URL --confirm integration-tests
-  -  if ! ./gradlew clean integrationTest -Durl=https://integration-tests.herokuapp.com; then travis_terminate 1;
+  -  if ! ./gradlew clean integrationTest -Durl=https://integration-tests.herokuapp.com then travis_terminate 1
