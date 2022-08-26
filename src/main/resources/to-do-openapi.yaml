@@ -55,6 +55,29 @@ paths:
           description: program has successfully deleted the to do
         '404':
           description: to do not found
+    patch:
+      operationId: edit
+      tags:
+        - todos
+      description: edit a toDo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: program successfully updated toDo properties
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+      responses:
+        '204':
+          description: toDo updated
+        '404':
+          description: toDo not found
 
 components:
   schemas:
