@@ -35,4 +35,19 @@ public class ToDoService {
         }
         return true;
     }
+
+    public boolean edit(Long id, ToDoDTO editedToDo) {
+        try {
+            toDoRepository.findById(id);
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException){
+            return false;
+        }
+        ToDoDTO updatedToDoDTO = new ToDoDTO();
+        updatedToDoDTO.setId(id);
+        updatedToDoDTO.setName(editedToDo.getName());
+        toDoMapper.entityToDTO(toDoRepository.save(toDoMapper.dtoToEntity(updatedToDoDTO)));
+
+        return true;
+
+    }
 }

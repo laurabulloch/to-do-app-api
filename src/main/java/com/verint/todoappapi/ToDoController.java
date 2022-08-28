@@ -35,4 +35,14 @@ public class ToDoController implements TodosApi {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @Override
+    public ResponseEntity<Void> edit(Long id, ToDoDTO body) {
+        boolean success = toDoService.edit(id, body);
+
+        if(success){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

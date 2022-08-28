@@ -17,6 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -95,6 +96,16 @@ class ToDoControllerTest {
 
         mockMvc.perform(delete("/to-dos/1")).andExpect(status().isNotFound());
     }
+    @Test
+    void edit_shouldRespond404WhenIdNotFound() throws Exception {
+        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
+        ToDoDTO test = new ToDoDTO();
+        test.setName("item 1");
+        test.setId(1L);
 
+        when(toDoService.edit(1L, test)).thenReturn(false);
+
+        mockMvc.perform(patch("/to-dos/1")).andExpect(status().isNotFound());
+    }
 
 }
