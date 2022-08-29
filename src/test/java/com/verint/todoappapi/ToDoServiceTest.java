@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -83,5 +84,13 @@ class ToDoServiceTest {
         doThrow(new EmptyResultDataAccessException(1)).when(toDoRepository).deleteById(1L);
 
         assertThat(toDoService.delete(1L), is(false));
+    }
+    @Test
+    void edit_toDoExists_shouldReturnTrue(){
+        ToDo toDo = new ToDo(1L,"Item Patch");
+        when(toDoRepository.findById(any()))
+                .thenReturn(Optional.of(toDo));
+
+        assertThat(toDoService.edit(1L, ToDoDTOBuilder.builder().name("Patched Name").build()), is(true));
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,17 +38,14 @@ public class ToDoService {
     }
 
     public boolean edit(Long id, ToDoDTO editedToDo) {
-        try {
-            toDoRepository.findById(id);
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException){
+        Optional<ToDo> toDoOptional = toDoRepository.findById(id);
+        if (toDoOptional.isPresent()){
+            ToDo toDo = toDoOptional.get();
+            toDo.setName(editedToDo.getName());
+            toDoRepository.save(toDo);
+            return true;
+        } else {
             return false;
         }
-        ToDoDTO updatedToDoDTO = new ToDoDTO();
-        updatedToDoDTO.setId(id);
-        updatedToDoDTO.setName(editedToDo.getName());
-        toDoMapper.entityToDTO(toDoRepository.save(toDoMapper.dtoToEntity(updatedToDoDTO)));
-
-        return true;
-
     }
 }

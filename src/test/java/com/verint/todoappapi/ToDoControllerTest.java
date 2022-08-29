@@ -90,22 +90,35 @@ class ToDoControllerTest {
     }
     @Test
     void delete_shouldRespond404WhenIdNotFound()throws Exception{
-        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
-
         when(toDoService.delete(any())).thenReturn(false);
 
         mockMvc.perform(delete("/to-dos/1")).andExpect(status().isNotFound());
     }
+
     @Test
-    void edit_shouldRespond404WhenIdNotFound() throws Exception {
-        ArgumentCaptor<ToDoDTO> argumentCaptor = ArgumentCaptor.forClass(ToDoDTO.class);
-        ToDoDTO test = new ToDoDTO();
-        test.setName("item 1");
-        test.setId(1L);
+    void edit_callServiceDeleteWithIdGiven() throws Exception{
+        when(toDoService.edit(any(),any())).thenReturn(true);
 
-        when(toDoService.edit(1L, test)).thenReturn(false);
+        mockMvc.perform(patch("/to-dos/1")
+                .contentType(APPLICATION_JSON)
+                .content("""
+                         {"name": "Item Patch"}
+                         """));
 
-        mockMvc.perform(patch("/to-dos/1")).andExpect(status().isNotFound());
+        verify(toDoService).edit(1L,ToDoDTOBuilder.builder().name("Item Patch").build());
+    }
+
+    @Test
+    void edit_idInDatabase_returnsSuccessMessage() throws Exception{
+        when(toDoService.edit(any(),any())).thenReturn(true);
+
+        mockMvc.perform(patch("/to-dos/1")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                         {"name": "Item Patch"}
+                         """))
+                .andExpect(
+                        status().isNoContent());
     }
 
 }
