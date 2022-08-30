@@ -96,8 +96,8 @@ class ToDoControllerTest {
     }
 
     @Test
-    void edit_callServiceDeleteWithIdGiven() throws Exception{
-        when(toDoService.edit(any(),any())).thenReturn(true);
+    void edit_callServicePatchWithIdGiven() throws Exception{
+        when(toDoService.edit(any() ,any())).thenReturn(true);
 
         mockMvc.perform(patch("/to-dos/1")
                 .contentType(APPLICATION_JSON)
@@ -115,10 +115,23 @@ class ToDoControllerTest {
         mockMvc.perform(patch("/to-dos/1")
                         .contentType(APPLICATION_JSON)
                         .content("""
-                         {"name": "Item Patch"}
+                         {"name": "Item"}
                          """))
                 .andExpect(
                         status().isNoContent());
+    }
+
+    @Test
+    void edit_idNotInDatabase_returnsFailMessage() throws Exception{
+        when(toDoService.edit(any(),any())).thenReturn(false);
+
+        mockMvc.perform(patch("/to-dos/100")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                         {"name": "Item"}
+                         """))
+                .andExpect(
+                        status().isNotFound());
     }
 
 }

@@ -55,6 +55,20 @@ class ToDoIntegrationTest {
                         .body("name", hasItems("Item 2", "Item 3"));
 
         }
+
+        @Test
+        void patch_ToDoExists_SuccessCode(){
+                given()
+                        .contentType(ContentType.JSON)
+                        .body("""
+                         {"name": "Patch Test"}
+                         """)
+                        .when()
+                        .patch("/to-dos/1")
+                        .then()
+                        .assertThat().statusCode(204);
+
+        }
         @Test
         void deleteToDos() {
                 when().delete("/to-dos/1")
