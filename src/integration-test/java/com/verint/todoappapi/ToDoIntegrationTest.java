@@ -61,7 +61,7 @@ class ToDoIntegrationTest {
                 given()
                         .contentType(ContentType.JSON)
                         .body("""
-                         {"name": "Patch Test"}
+                         {"name": "Change Test"}
                          """)
                         .when()
                         .patch("/to-dos/1")
